@@ -1,6 +1,6 @@
 import React from 'react'
 import { Movie } from '../Movie';
-import { MovieWrapper } from '../Movie/styles';
+import { MoviesWrapper } from './styles';
 
 interface IMovie {
     imageUrl: string;
@@ -10,7 +10,7 @@ interface IMovie {
     year: number;
 }
 
-const movies: Array<IMovie> = [
+export const movies: Array<IMovie> = [
     {
         imageUrl: 'https://images-na.ssl-images-amazon.com/images/S/pv-target-images/46c67c318b541f05f7a193a680c899a6e2a3dbcfb4f34edb92048828a5580d4e._RI_V_TTW_.jpg',
         title: 'Bill: Vol 2',
@@ -43,16 +43,15 @@ const movies: Array<IMovie> = [
 
 export const MovieList = () => {
     return (
-        <MovieWrapper>
+        <MoviesWrapper>
             {movies.map(movie =>
-                <Movie
-                    key={movie.id}
-                    genre={movie.genre}
-                    id={movie.id}
-                    imageUrl={movie.imageUrl}
-                    title={movie.title}
-                    year={movie.year} />
+                    <Movie
+                        genre={movie.genre}
+                        id={movie.id}
+                        imageUrl={movie.imageUrl}
+                        title={movie.title}
+                        year={movie.year} />
             )}
-        </MovieWrapper>
+        </MoviesWrapper>
     )
 }

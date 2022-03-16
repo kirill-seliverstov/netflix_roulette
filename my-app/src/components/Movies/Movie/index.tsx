@@ -13,7 +13,7 @@ export const Movie: FC<MovieProps> = ({imageUrl, id, genre, title, year}) => {
   return (
     <>
         <MovieWrapper id={id}>
-            <img src={imageUrl} alt=""  style={{width: '300px'}}/>
+            <img src={imageUrl} alt=""  style={{width: '100%'}}/>
             <MovieDesc>
                 <div>
                     <MovieTitle>{title}</MovieTitle>

@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const MovieWrapper = styled.div`
-    max-width: 33%;
-
     margin: 2.5rem 0;
 `
 
@@ -19,9 +17,7 @@ export const MovieDesc = styled.div`
 
 export const MovieTitle = styled.p`
     color: #ffffff;
-
-    margin: 1rem 0;
-
+    
     font-size: 1rem;
 `
 
@@ -32,6 +28,8 @@ export const MovieGenre = styled.p`
 `
 
 export const MovieYear = styled.p`
+    align-self: flex-start;
+
     padding: 0.4rem;
 
     font-size: 0.7rem;
