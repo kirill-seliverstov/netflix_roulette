@@ -2,41 +2,43 @@ import styled from 'styled-components';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 
 export const STabs = styled(Tabs)`
-    margin: 0 2rem;
+    background-color: #232323;
+
 `
 
 export const STabList = styled(TabList)`
-  list-style-type: none;
-  padding: 4px;
   display: flex;
-  margin: 0;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  
+  list-style-type: none;
+
+  border-bottom: 0.125rem solid #555555;
+  box-shadow: 0 0.5rem 0.375rem -0.375rem #000000;
 `;
-// STabList.tabsRole = 'TabList';
 
 export const STab = styled(Tab)`
-  margin-right: 4px;
-  border: 1px solid black;
-  padding: 4px;
-  user-select: none;
-  cursor: cursor;
+  color: #ffffff;
+
+  margin-right: 1rem;
+  padding: 0.5rem;
+
+  cursor: pointer;
+
+  font-size: 1rem;
+  text-transform: uppercase;
 
   &.is-selected {
-    // color: white;
-    // background: black;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid #F65261;
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 0, 255, .5)
   }
 `;
-// STab.tabsRole = 'Tab';
 
 export const STabPanel = styled(TabPanel)`
   display: none;
-  min-height: 40vh;
-  border: 1px solid black;
   padding: 4px;
   margin-top: -5px;
 
@@ -44,4 +46,3 @@ export const STabPanel = styled(TabPanel)`
     display: block;
   }
 `;
-// STabPanel.tabsRole = 'TabPanel';

@@ -1,5 +1,7 @@
 import React, {FC} from 'react'
+import { MovieList } from '../Movies/MovieList'
 import { STabs, STabList, STab, STabPanel } from './styles'
+
 
 export const Tabs: FC = () => {
     return (
@@ -9,13 +11,17 @@ export const Tabs: FC = () => {
                 selectedTabPanelClassName='is-selected'
             >
                 <STabList>
-                    <STab>Tab 1</STab>
-                    <STab>Tab 2</STab>
-                    <STab>Tab 3</STab>
+                    <STab>All</STab>
+                    <STab>Documentary</STab>
+                    <STab>Comedy</STab>
+                    <STab>Horror</STab>
+                    <STab>Crime</STab>
                 </STabList>
-                <STabPanel>Panel 1</STabPanel>
-                <STabPanel>Panel 2</STabPanel>
-                <STabPanel>Panel 3</STabPanel>
+                <STabPanel><MovieList /></STabPanel>
+                <STabPanel>Documentary</STabPanel>
+                <STabPanel>Comedy</STabPanel>
+                <STabPanel>Horror</STabPanel>
+                <STabPanel>Crime</STabPanel>
             </STabs>
         </>
     )

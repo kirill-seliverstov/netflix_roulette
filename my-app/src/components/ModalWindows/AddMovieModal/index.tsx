@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { ButtonsWrapper, ResetButton, StyledForm, StyledInput, StyledLabel, SubmitButton } from './styles';
+import { ButtonsWrapper, ResetButton, StyledForm, StyledInput, StyledLabel, StyledSelect, SubmitButton } from './styles';
 
 interface AddMovieModalProps {
   onConfirm: () => void;
@@ -24,6 +24,16 @@ export const AddMovieModal: FunctionComponent<AddMovieModalProps> = (props) => {
         <StyledLabel>
           Movie Url
           <StyledInput type='text' placeholder='Movie URL here' />
+        </StyledLabel>
+
+        <StyledLabel>
+          Genre
+          <StyledSelect>
+            <option value="select-genre" disabled selected hidden>Select Genre</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </StyledSelect>
         </StyledLabel>
 
         <StyledLabel>

@@ -41,6 +41,31 @@ export const StyledInput = styled.input`
   }
 `
 
+export const StyledSelect = styled.select`
+  display: block;
+  width: 100%;
+
+  background-color: rgba(0,0,0,0.3);
+
+  font-size: 1rem;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 0.25rem;
+
+  padding: 1rem;
+  margin: 1rem 0;
+
+  &:focus {
+      border: none;
+      outline: none;
+  }
+
+  &::placeholder {
+      color: #555555;
+  }
+`
+
 export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
