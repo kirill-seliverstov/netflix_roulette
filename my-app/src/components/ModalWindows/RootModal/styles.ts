@@ -18,7 +18,7 @@ export const Backdrop = styled.div`
   left: 0;
   z-index: 500;
   backdrop-filter: blur(1rem);
-  margin-left: 2rem;
+  padding-left: 2rem;
 `;
 
 export const StyledModal = styled.div`

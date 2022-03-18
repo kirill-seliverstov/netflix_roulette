@@ -4,7 +4,6 @@ import { ButtonsWrapper, ResetButton, StyledForm, StyledInput, StyledLabel, Styl
 interface AddMovieModalProps {
   onConfirm: () => void;
   onCancel: () => void;
-  message: string;
 }
 
 export const AddMovieModal: FunctionComponent<AddMovieModalProps> = (props) => {

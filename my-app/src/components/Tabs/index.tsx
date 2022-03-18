@@ -20,12 +20,15 @@ export const Tabs: FC = () => {
                 item.genre.toLowerCase() === filter
             ).map(movie =>
                 <Movie
+                    key={movie.id}
                     genre={movie.genre}
                     id={movie.id}
                     imageUrl={movie.imageUrl}
                     title={movie.title}
-                    year={movie.year} />
-            ))
+                    year={movie.year}
+                />
+            )
+        )
     }
 
 
@@ -45,6 +48,7 @@ export const Tabs: FC = () => {
                 <STabPanel>
                     {movies.map(movie =>
                         <Movie
+                            key={movie.id}
                             genre={movie.genre}
                             id={movie.id}
                             imageUrl={movie.imageUrl}

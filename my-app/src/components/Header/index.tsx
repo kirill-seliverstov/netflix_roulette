@@ -25,8 +25,8 @@ export const Header: FC<HeaderProps> = () => {
           <AddMovieModal
             onConfirm={onConfirm}
             onCancel={onCancel}
-            message="Are you sure you want to delete element?" />
-          }
+          />
+        }
         headerText={'Add movie'} />
     </HeaderWrapper>
   )
