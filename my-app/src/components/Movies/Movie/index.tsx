@@ -4,6 +4,7 @@ import threeDots from '../../../assets/images/3-dot-icon-0.jpg';
 import { useModal } from '../../../hooks/useModal';
 import { Modal } from '../../ModalWindows/RootModal';
 import { EditMovieModal } from '../../ModalWindows/EditMovieModal';
+import { DeleteMovieModal } from '../../ModalWindows/DeleteMovieModal';
 
 interface MovieProps {
     imageUrl: string;
@@ -16,11 +17,9 @@ interface MovieProps {
 export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year }) => {
     const { isShown, toggle } = useModal();
     const [hovered, setHovered] = useState<boolean>(false);
-
     const [controlsShow, setControlsShow] = useState<boolean>(false);
 
     const onConfirm = () => toggle();
-    const onCancel = () => toggle();
 
     const showHover = (event: React.MouseEvent<HTMLDivElement>) => {
         setHovered(true)
@@ -61,11 +60,11 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year }) => {
             <Modal
                 isShown={isShown}
                 hide={toggle}
+                headerText={'Edit movie'}
                 modalContent={
                     <EditMovieModal
                         genre={genre}
                         id={id}
-                        onCancel={onCancel}
                         onConfirm={onConfirm}
                         title={title}
                         year={year}

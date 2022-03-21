@@ -31,7 +31,6 @@ export const Tabs: FC = () => {
         )
     }
 
-
     return (
         <>
             <STabs
