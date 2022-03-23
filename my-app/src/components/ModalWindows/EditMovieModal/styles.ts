@@ -18,7 +18,7 @@ export const StyledLabel = styled.label`
 
 export const StyledInput = styled.input`
   display: block;
-  width: 100%;
+  width: 95%;
 
   background-color: rgba(0,0,0,0.3);
 

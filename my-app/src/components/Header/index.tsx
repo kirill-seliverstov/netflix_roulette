@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useModal } from '../../hooks/useModal';
 import { AddMovieModal } from '../ModalWindows/AddMovieModal';
 import { Logo } from '../Logo'
@@ -10,6 +10,7 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = () => {
+  
   const { isShown, toggle } = useModal();
   const onConfirm = () => toggle();
   const onCancel = () => toggle();

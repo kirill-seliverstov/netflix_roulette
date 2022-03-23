@@ -5,7 +5,7 @@ import { Wrapper, StyledModal, HeaderText, CloseButton, Content, Header, Backdro
 
 export interface ModalProps {
     isShown: boolean;
-    hide: () => void;
+    hide: (value?: any) => void;
     modalContent: JSX.Element;
     headerText?: string;
 }

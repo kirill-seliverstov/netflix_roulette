@@ -2,7 +2,7 @@ import { SearchForm } from './index';
 import styled from "styled-components";
 
 const FormWrapper = styled.div`
-    margin: 3rem 10rem 2rem;
+    margin: 2rem 10rem 10rem;
 `
 
 const FormTitle = styled.p`

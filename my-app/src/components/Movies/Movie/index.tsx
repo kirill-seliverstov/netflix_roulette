@@ -9,15 +9,18 @@ import { DeleteMovieModal } from '../../ModalWindows/DeleteMovieModal';
 interface MovieProps {
     imageUrl: string;
     title: string;
-    id: string;
-    genre: string;
-    year: number;
+    id: string | number;
+    genre: string[] | string;
+    year: string | number | undefined;
+    overview?: string;
+    runtime?: number;
 }
 
-export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year }) => {
+export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overview, runtime }) => {
     const { isShown, toggle } = useModal();
     const [hovered, setHovered] = useState<boolean>(false);
     const [controlsShow, setControlsShow] = useState<boolean>(false);
+    const [deleteModalShow, setdeleteModalShow] = useState<boolean>(false);
 
     const onConfirm = () => toggle();
 
@@ -37,26 +40,41 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year }) => {
         setControlsShow(false)
     }
 
+    const showDeleteModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setdeleteModalShow(true)
+    }
+
+    const hideDeleteModal = (event: React.MouseEvent<HTMLDivElement>) => {
+        setdeleteModalShow(false)
+    }
+
     return (
-        <>
-            <MovieWrapper id={id} onMouseEnter={showHover} onMouseLeave={hideHover}>
-                <ShowControls onClick={showControls} display={hovered ? 'block' : 'none'} />
+        <MovieWrapper onMouseEnter={showHover} onMouseLeave={hideHover}>
+            <ShowControls onClick={showControls} display={hovered ? 'block' : 'none'} />
 
-                <MovieControlsWrapper display={controlsShow ? 'flex' : 'none'}>
-                    <HideControls onClick={hideControls}>X</HideControls>
-                    <ControlButton onClick={toggle}>Edit</ControlButton>
-                    <DeleteControl>Delete</DeleteControl>
-                </MovieControlsWrapper>
+            <MovieControlsWrapper display={controlsShow ? 'flex' : 'none'}>
+                <HideControls onClick={hideControls}>X</HideControls>
+                <ControlButton onClick={toggle}>Edit</ControlButton>
+                <DeleteControl onClick={showDeleteModal}>Delete</DeleteControl>
+            </MovieControlsWrapper>
 
-                <img src={imageUrl} alt="" style={{ width: '100%' }} />
-                <MovieDesc>
-                    <div>
-                        <MovieTitle>{title}</MovieTitle>
-                        <MovieGenre>{genre}</MovieGenre>
-                    </div>
-                    <MovieYear>{year}</MovieYear>
-                </MovieDesc>
-            </MovieWrapper>
+            <img
+                src={imageUrl}
+                alt="poster"
+                onError={(e) => {
+                    e.currentTarget.onerror = null
+                    e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/4/44/Question_mark_%28black_on_white%29.png"
+                }}
+                style={{ width: '100%' }}
+            />
+            <MovieDesc>
+                <div>
+                    <MovieTitle>{title}</MovieTitle>
+                    <MovieGenre>{genre}</MovieGenre>
+                </div>
+                <MovieYear>{year}</MovieYear>
+            </MovieDesc>
+
             <Modal
                 isShown={isShown}
                 hide={toggle}
@@ -68,8 +86,20 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year }) => {
                         onConfirm={onConfirm}
                         title={title}
                         year={year}
+                        overview={overview}
+                        runtime={runtime}
                     />
                 } />
-        </>
+            <Modal
+                isShown={deleteModalShow}
+                hide={hideDeleteModal}
+                headerText={'delete movie'}
+                modalContent={
+                    <DeleteMovieModal
+                        onConfirm={hideDeleteModal}
+                    />
+                }
+            />
+        </MovieWrapper>
     )
 }

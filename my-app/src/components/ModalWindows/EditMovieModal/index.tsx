@@ -4,9 +4,11 @@ import { StyledForm, StyledLabel, StyledInput, StyledSelect, ButtonsWrapper, Res
 interface IEditMovieModalProps {
     onConfirm: () => void;
     title: string;
-    id: string;
-    genre: string;
-    year: number;
+    id: string | number;
+    genre: string[] | string;
+    year: string | number | undefined;
+    overview: string | undefined;
+    runtime: number | undefined;
 }
 
 export const EditMovieModal: FC<IEditMovieModalProps> = (props) => {
@@ -47,12 +49,12 @@ export const EditMovieModal: FC<IEditMovieModalProps> = (props) => {
 
                 <StyledLabel>
                     Overview
-                    <StyledInput type='text' placeholder='Overview here' defaultValue="Overview text goes here" />
+                    <StyledInput type='text' placeholder='Overview here' defaultValue={props.overview} />
                 </StyledLabel>
 
                 <StyledLabel>
                     Runtime
-                    <StyledInput type='text' placeholder='Runtime here' defaultValue="Runtime text goes here" />
+                    <StyledInput type='text' placeholder='Runtime here' defaultValue={props.runtime} />
                 </StyledLabel>
                 <ButtonsWrapper>
                     <ResetButton onClick={onReset}>Reset</ResetButton>

@@ -1,5 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { ButtonsWrapper, ResetButton, StyledForm, StyledInput, StyledLabel, StyledSelect, SubmitButton } from './styles';
+import { useModal } from '../../../hooks/useModal';
+import { Modal } from '../RootModal';
+import { AddMovieSuccessModal } from '../AddMovieSuccessModal';
 
 interface AddMovieModalProps {
   onConfirm: () => void;
@@ -7,12 +10,27 @@ interface AddMovieModalProps {
 }
 
 export const AddMovieModal: FunctionComponent<AddMovieModalProps> = (props) => {
+  const { isShown, toggle } = useModal();
+
+  const onReset = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+  }
+
+  const addMovie = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+    toggle();
+    props.onConfirm()
+  }
+
   return (
     <React.Fragment>
       <StyledForm>
         <StyledLabel>
           Title
-          <StyledInput type='text' placeholder='Movie Title' />
+            <StyledInput type='text' placeholder='Movie Title'/>
         </StyledLabel>
 
         <StyledLabel>
@@ -45,10 +63,18 @@ export const AddMovieModal: FunctionComponent<AddMovieModalProps> = (props) => {
           <StyledInput type='text' placeholder='Runtime here' />
         </StyledLabel>
         <ButtonsWrapper>
-          <ResetButton onClick={props.onCancel}>Reset</ResetButton>
-          <SubmitButton onClick={props.onConfirm}>Submit</SubmitButton>
+          <ResetButton onClick={onReset}>Reset</ResetButton>
+          <SubmitButton onClick={addMovie}>Submit</SubmitButton>
         </ButtonsWrapper>
       </StyledForm>
+      <Modal
+        hide={toggle}
+        isShown={isShown}
+        headerText={'done'}
+        modalContent={
+          <AddMovieSuccessModal />
+        }
+      />
     </React.Fragment>
   );
 };

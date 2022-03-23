@@ -1,31 +1,34 @@
-import React, { FC } from 'react'
-import { MovieList } from '../Movies/MovieList'
+import React, { FC, useEffect } from 'react'
 import { STabs, STabList, STab, STabPanel } from './styles'
-import { movies } from '../Movies/MovieList'
 import { Movie } from '../Movies/Movie'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMovies } from '../../store/movies/actions';
+import { getMoviesSelector } from '../../store/movies/selectors';
 
 
-interface IMovie {
-    imageUrl: string;
-    title: string;
-    id: string;
-    genre: string;
-    year: number;
-}
 
 export const Tabs: FC = () => {
-    const filterGenre = (array: IMovie[], filter: string) => {
+    const dispatch = useDispatch();
+    const movies = useSelector(getMoviesSelector)
+
+    useEffect(() => {
+        dispatch(fetchMovies())
+    }, [])
+
+    const filterGenre = (array = movies, filter: string) => {
         return (
             array.filter(item =>
-                item.genre.toLowerCase() === filter
+                item.genres.join(', ').toLowerCase() === filter
             ).map(movie =>
                 <Movie
                     key={movie.id}
-                    genre={movie.genre}
+                    genre={movie.genres}
                     id={movie.id}
-                    imageUrl={movie.imageUrl}
+                    imageUrl={movie.poster_path}
                     title={movie.title}
-                    year={movie.year}
+                    year={movie.release_date}
+                    overview={movie.overview}
+                    runtime={movie.runtime}
                 />
             )
         )
@@ -48,11 +51,14 @@ export const Tabs: FC = () => {
                     {movies.map(movie =>
                         <Movie
                             key={movie.id}
-                            genre={movie.genre}
+                            genre={movie.genres.join(', ')}
                             id={movie.id}
-                            imageUrl={movie.imageUrl}
+                            imageUrl={movie.poster_path}
                             title={movie.title}
-                            year={movie.year} />
+                            year={movie.release_date?.substring(0, 4)}
+                            overview={movie.overview}
+                            runtime={movie.runtime}
+                        />
                     )}
                 </STabPanel>
                 <STabPanel>
