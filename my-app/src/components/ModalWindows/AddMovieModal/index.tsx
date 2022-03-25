@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { ButtonsWrapper, ResetButton, StyledForm, StyledInput, StyledLabel, StyledSelect, SubmitButton } from './styles';
 import { useModal } from '../../../hooks/useModal';
 import { Modal } from '../RootModal';
@@ -9,7 +9,7 @@ interface AddMovieModalProps {
   onCancel: () => void;
 }
 
-export const AddMovieModal: FunctionComponent<AddMovieModalProps> = (props) => {
+export const AddMovieModal: FC<AddMovieModalProps> = (props) => {
   const { isShown, toggle } = useModal();
 
   const onReset = (event: React.MouseEvent<HTMLButtonElement>) => {

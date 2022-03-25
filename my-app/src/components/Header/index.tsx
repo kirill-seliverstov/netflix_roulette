@@ -22,7 +22,7 @@ export const Header: FC<HeaderProps> = () => {
       <Modal
         isShown={isShown}
         hide={toggle}
-        headerText={'Add movie'}
+        headerText='Add movie'
         modalContent={
           <AddMovieModal
             onConfirm={onConfirm}
