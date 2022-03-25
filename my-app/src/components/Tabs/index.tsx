@@ -18,19 +18,19 @@ export const Tabs: FC = () => {
     const filterGenre = (array = movies, filter: string) => {
         return (
             array.filter(item =>
-                item.genres.join(', ').toLowerCase() === filter
-            ).map(movie =>
-                <Movie
-                    key={movie.id}
-                    genre={movie.genres}
-                    id={movie.id}
-                    imageUrl={movie.poster_path}
-                    title={movie.title}
-                    year={movie.release_date}
-                    overview={movie.overview}
-                    runtime={movie.runtime}
-                />
-            )
+                item.genres.includes(filter)
+                ).map(movie =>
+                    <Movie
+                        key={movie.id}
+                        genre={movie.genres}
+                        id={movie.id}
+                        imageUrl={movie.poster_path}
+                        title={movie.title}
+                        year={movie.release_date}
+                        overview={movie.overview}
+                        runtime={movie.runtime}
+                    />
+                )
         )
     }
 

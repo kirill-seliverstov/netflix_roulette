@@ -5,6 +5,8 @@ import { useModal } from '../../../hooks/useModal';
 import { Modal } from '../../ModalWindows/RootModal';
 import { EditMovieModal } from '../../ModalWindows/EditMovieModal';
 import { DeleteMovieModal } from '../../ModalWindows/DeleteMovieModal';
+import { useDispatch } from 'react-redux';
+import { deleteMovie } from '../../../store/movies/actions';
 
 interface MovieProps {
     imageUrl: string;
@@ -17,6 +19,7 @@ interface MovieProps {
 }
 
 export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overview, runtime }) => {
+    const dispatch = useDispatch();
     const { isShown, toggle } = useModal();
     const [hovered, setHovered] = useState<boolean>(false);
     const [controlsShow, setControlsShow] = useState<boolean>(false);
@@ -45,6 +48,7 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overvi
     }
 
     const hideDeleteModal = (event: React.MouseEvent<HTMLDivElement>) => {
+        dispatch(deleteMovie({ id: id }))
         setdeleteModalShow(false)
     }
 

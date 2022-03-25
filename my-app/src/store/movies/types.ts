@@ -1,4 +1,4 @@
-import { FETCH_MOVIES, FETCH_MOVIES_ERROR, FETCH_MOVIES_SUCCESS } from "./actionTypes";
+import { DELETE_MOVIE, FETCH_MOVIES, FETCH_MOVIES_ERROR, FETCH_MOVIES_SUCCESS } from "./actionTypes";
 
 export interface MoviesState {
     movies: Movies[];
@@ -29,6 +29,10 @@ export interface FetchMoviesErrorPayload {
     error: string;
 }
 
+export interface DeleteMoviePayload {
+    id: string | number;
+}
+
 export type FetchMovies = {
     type: typeof FETCH_MOVIES
 }
@@ -43,4 +47,9 @@ export type FetchMoviesError = {
     payload: FetchMoviesErrorPayload
 }
 
-export type MoviesAction = FetchMovies | FetchMoviesError | FetchMoviesSuccess;
+export type DeleteMovie = {
+    type: typeof DELETE_MOVIE,
+    payload: DeleteMoviePayload
+}
+
+export type MoviesAction = FetchMovies | FetchMoviesError | FetchMoviesSuccess | DeleteMovie;
