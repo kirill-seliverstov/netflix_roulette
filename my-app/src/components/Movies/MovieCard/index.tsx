@@ -5,25 +5,38 @@ import { useModal } from '../../../hooks/useModal';
 import { Modal } from '../../ModalWindows/RootModal';
 import { EditMovieModal } from '../../ModalWindows/EditMovieModal';
 import { DeleteMovieModal } from '../../ModalWindows/DeleteMovieModal';
-import { useDispatch } from 'react-redux';
-import { deleteMovie } from '../../../store/movies/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteMovieAction, movieDescrition } from '../../../store/movies/actions';
+import { getMovieDescritionSelector } from '../../../store/movies/selectors';
 
 interface MovieProps {
     imageUrl: string;
     title: string;
     id: string | number;
-    genre: string[] | string;
-    year: string | number | undefined;
+    genre: string | string[];
+    year: string | undefined;
     overview?: string;
     runtime?: number;
+    voteAverage?: number;
 }
 
-export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overview, runtime }) => {
+export const MovieCard: FC<MovieProps> = ({
+    imageUrl,
+    id,
+    genre,
+    title,
+    year,
+    overview,
+    runtime,
+    voteAverage
+}) => {
     const dispatch = useDispatch();
     const { isShown, toggle } = useModal();
     const [hovered, setHovered] = useState<boolean>(false);
     const [controlsShow, setControlsShow] = useState<boolean>(false);
     const [deleteModalShow, setdeleteModalShow] = useState<boolean>(false);
+
+    const description = useSelector(getMovieDescritionSelector);
 
     const onConfirm = () => toggle();
 
@@ -48,8 +61,26 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overvi
     }
 
     const hideDeleteModal = (event: React.MouseEvent<HTMLDivElement>) => {
-        dispatch(deleteMovie({ id: id }))
         setdeleteModalShow(false)
+    }
+
+    const deleteMovie = (event: React.MouseEvent<HTMLButtonElement>) => {
+        dispatch(deleteMovieAction({ id: id }))
+    }
+
+    const getMovieDescription = (event: React.MouseEvent<HTMLImageElement>) => {
+        dispatch(movieDescrition({
+            description: {
+                poster_path: imageUrl,
+                title: title,
+                id: id,
+                genres: genre,
+                overview: overview,
+                runtime: runtime,
+                release_date: year,
+                vote_average: voteAverage
+            }
+        }))
     }
 
     return (
@@ -69,7 +100,8 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overvi
                     e.currentTarget.onerror = null
                     e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/4/44/Question_mark_%28black_on_white%29.png"
                 }}
-                style={{ width: '100%' }}
+                onClick={getMovieDescription}
+                style={{ width: '100%', height: '53.25rem' }}
             />
             <MovieDesc>
                 <div>
@@ -100,7 +132,7 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overvi
                 headerText={'delete movie'}
                 modalContent={
                     <DeleteMovieModal
-                        onConfirm={hideDeleteModal}
+                        onConfirm={deleteMovie}
                     />
                 }
             />

@@ -43,9 +43,6 @@ export const STabPanel = styled(TabPanel)`
   margin-top: -5px;
 
   &.is-selected {
-    display: grid;
-    grid-template-columns: 30% 30% 30%;
-    grid-gap: 4rem;
-    justify-content: center;
+    display: block;
   }
 `;

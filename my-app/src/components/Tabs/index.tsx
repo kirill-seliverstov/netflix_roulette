@@ -1,11 +1,10 @@
 import React, { FC, useEffect } from 'react'
 import { STabs, STabList, STab, STabPanel } from './styles'
-import { Movie } from '../Movies/Movie'
+import { MovieCard } from '../Movies/MovieCard'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovies } from '../../store/movies/actions';
 import { getMoviesSelector } from '../../store/movies/selectors';
-
-
+import { MovieList } from '../Movies/MovieList';
 
 export const Tabs: FC = () => {
     const dispatch = useDispatch();
@@ -20,7 +19,7 @@ export const Tabs: FC = () => {
             array.filter(item =>
                 item.genres.includes(filter)
                 ).map(movie =>
-                    <Movie
+                    <MovieCard
                         key={movie.id}
                         genre={movie.genres}
                         id={movie.id}
@@ -48,18 +47,7 @@ export const Tabs: FC = () => {
                     <STab>Crime</STab>
                 </STabList>
                 <STabPanel>
-                    {movies.map(movie =>
-                        <Movie
-                            key={movie.id}
-                            genre={movie.genres.join(', ')}
-                            id={movie.id}
-                            imageUrl={movie.poster_path}
-                            title={movie.title}
-                            year={movie.release_date?.substring(0, 4)}
-                            overview={movie.overview}
-                            runtime={movie.runtime}
-                        />
-                    )}
+                    <MovieList />
                 </STabPanel>
                 <STabPanel>
                     {filterGenre(movies, 'documentary')}

@@ -2,7 +2,7 @@ import { SearchForm } from './index';
 import styled from "styled-components";
 
 const FormWrapper = styled.div`
-    margin: 2rem 10rem 10rem;
+    padding: 2rem 10rem 10rem;
 `
 
 const FormTitle = styled.p`
@@ -21,7 +21,7 @@ const StyledForm = styled.form`
 const SearchInput = styled.input`
     flex: 1;
 
-    background-color: rgba(0,0,0,0.3);
+    background-color: #1c1c1ce0;
 
     font-size: 1rem;
     color: #ffffff;

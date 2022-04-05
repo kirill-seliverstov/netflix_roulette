@@ -2,8 +2,9 @@ import styled from "styled-components";
 
 export const MoviesWrapper = styled.div`
     display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-gap: 1rem;
+    grid-template-columns: 30% 30% 30%;
+    grid-gap: 4rem;
+    justify-content: center;
 `
 
 export const MovieItem = styled.div`

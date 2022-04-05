@@ -1,9 +1,10 @@
-import { DELETE_MOVIE, FETCH_MOVIES, FETCH_MOVIES_ERROR, FETCH_MOVIES_SUCCESS } from "./actionTypes";
+import { DELETE_MOVIE, FETCH_MOVIES, FETCH_MOVIES_ERROR, FETCH_MOVIES_SUCCESS, MOVIE_DESCRIPTION } from "./actionTypes";
 
 export interface MoviesState {
     movies: Movies[];
     error: string | null;
     loading: boolean;
+    description: null | Movies
 }
 
 export interface Movies {
@@ -13,12 +14,12 @@ export interface Movies {
     vote_count?: number;
     release_date?: string;
     poster_path: string;
-    overview: string;
+    overview?: string;
     budget?: number;
     revenue?: number;
-    runtime: number;
-    genres: Array<string>;
-    id: number;
+    runtime?: number;
+    genres: string[] | string;
+    id: number | string;
 }
 
 export interface FetchMoviesSuccessPayload {
@@ -31,6 +32,10 @@ export interface FetchMoviesErrorPayload {
 
 export interface DeleteMoviePayload {
     id: string | number;
+}
+
+export interface MovieDescriptionPayload {
+    description: null | Movies;
 }
 
 export type FetchMovies = {
@@ -52,4 +57,9 @@ export type DeleteMovie = {
     payload: DeleteMoviePayload
 }
 
-export type MoviesAction = FetchMovies | FetchMoviesError | FetchMoviesSuccess | DeleteMovie;
+export type MovieDescription = {
+    type: typeof MOVIE_DESCRIPTION,
+    payload: MovieDescriptionPayload
+}
+
+export type MoviesAction = FetchMovies | FetchMoviesError | FetchMoviesSuccess | DeleteMovie | MovieDescription;
