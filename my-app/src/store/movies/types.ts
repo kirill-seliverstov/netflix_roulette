@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import { DELETE_MOVIE, FETCH_MOVIES, FETCH_MOVIES_ERROR, FETCH_MOVIES_SUCCESS, MOVIE_DESCRIPTION } from "./actionTypes";
 
 export interface MoviesState {
@@ -22,6 +23,10 @@ export interface Movies {
     id: number | string;
 }
 
+export interface FetchMoviesPayload {
+    moviesLimit: number;
+}
+
 export interface FetchMoviesSuccessPayload {
     movies: Movies[];
 }
@@ -39,7 +44,8 @@ export interface MovieDescriptionPayload {
 }
 
 export type FetchMovies = {
-    type: typeof FETCH_MOVIES
+    type: typeof FETCH_MOVIES,
+    payload: FetchMoviesPayload
 }
 
 export type FetchMoviesSuccess = {
@@ -62,4 +68,4 @@ export type MovieDescription = {
     payload: MovieDescriptionPayload
 }
 
-export type MoviesAction = FetchMovies | FetchMoviesError | FetchMoviesSuccess | DeleteMovie | MovieDescription;
+export type MoviesAction = FetchMovies | FetchMoviesError | FetchMoviesSuccess | DeleteMovie | MovieDescription | AnyAction;

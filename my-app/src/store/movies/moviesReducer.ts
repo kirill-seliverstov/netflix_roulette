@@ -1,4 +1,4 @@
-import { Reducer } from 'redux';
+import { AnyAction, Reducer } from 'redux';
 import { FETCH_MOVIES, FETCH_MOVIES_SUCCESS, FETCH_MOVIES_ERROR, DELETE_MOVIE, MOVIE_DESCRIPTION } from './actionTypes';
 import { MoviesAction, MoviesState } from './types';
 
@@ -9,7 +9,7 @@ const initialState: MoviesState = {
     description: null
 }
 
-export const moviesReducer: Reducer<MoviesState> = (state = initialState, action: MoviesAction) => {
+export const moviesReducer: Reducer<MoviesState> = (state = initialState, action: MoviesAction ) => {
     switch(action.type) {
         case FETCH_MOVIES:
             return {...state, loading: true}

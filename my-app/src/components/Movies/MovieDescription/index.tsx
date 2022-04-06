@@ -9,15 +9,15 @@ export const MovieDescription = () => {
     if (description !== null) {
         return (
             <MovieDescriptionWrapper>
-                    <img
-                        src={description.poster_path}
-                        alt="poster"
-                        onError={(e) => {
-                            e.currentTarget.onerror = null
-                            e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/4/44/Question_mark_%28black_on_white%29.png"
-                        }}
-                        style={{ width: '15%' }}
-                    />
+                <img
+                    src={description.poster_path}
+                    alt="poster"
+                    onError={(e) => {
+                        e.currentTarget.onerror = null
+                        e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/4/44/Question_mark_%28black_on_white%29.png"
+                    }}
+                    style={{ width: '15%' }}
+                />
 
                 <MovieDescriptionItem>
                     <MovieHeader>
@@ -39,7 +39,7 @@ export const MovieDescription = () => {
                         {description.genres}
                     </MovieDescriptionGenres>
 
-                    <div style={{display: 'flex'}}>
+                    <div style={{ display: 'flex' }}>
                         <MovieDescriptionReleaseDate>
                             {description.release_date}
                         </MovieDescriptionReleaseDate>
@@ -55,8 +55,7 @@ export const MovieDescription = () => {
                 </MovieDescriptionItem>
             </MovieDescriptionWrapper>
         )
-} else {
-    return null
-}
-
+    } else {
+        return null
+    }
 }
