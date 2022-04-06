@@ -6,7 +6,7 @@ import { Modal } from '../../ModalWindows/RootModal';
 import { EditMovieModal } from '../../ModalWindows/EditMovieModal';
 import { DeleteMovieModal } from '../../ModalWindows/DeleteMovieModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMovieAction, movieDescrition } from '../../../store/movies/actions';
+import { deleteMovieAction, fetchMovies, movieDescrition } from '../../../store/movies/actions';
 import { getMovieDescritionSelector } from '../../../store/movies/selectors';
 
 interface MovieProps {
@@ -36,8 +36,6 @@ export const MovieCard: FC<MovieProps> = ({
     const [controlsShow, setControlsShow] = useState<boolean>(false);
     const [deleteModalShow, setdeleteModalShow] = useState<boolean>(false);
 
-    const description = useSelector(getMovieDescritionSelector);
-
     const onConfirm = () => toggle();
 
     const showHover = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -66,6 +64,7 @@ export const MovieCard: FC<MovieProps> = ({
 
     const deleteMovie = (event: React.MouseEvent<HTMLButtonElement>) => {
         dispatch(deleteMovieAction({ id: id }))
+        dispatch(fetchMovies({ moviesLimit: 0 }))
     }
 
     const getMovieDescription = (event: React.MouseEvent<HTMLImageElement>) => {

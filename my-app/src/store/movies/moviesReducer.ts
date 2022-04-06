@@ -18,7 +18,7 @@ export const moviesReducer: Reducer<MoviesState> = (state = initialState, action
         case FETCH_MOVIES_ERROR:
             return {...state, loading: false, error: action.payload.error}
         case DELETE_MOVIE: 
-            return {...state, movies: state.movies.filter(movie => movie.id !== action.payload.id)}
+            return {...state, movies: [...state.movies]}
         case MOVIE_DESCRIPTION: 
             return {...state, description: action.payload.description}
         default:

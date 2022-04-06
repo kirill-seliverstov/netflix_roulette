@@ -1,8 +1,8 @@
-import { FETCH_MOVIES } from './actionTypes';
-import { fetchMoviesError, fetchMoviesSuccess } from './actions';
+import { DELETE_MOVIE, FETCH_MOVIES } from './actionTypes';
+import { deleteMovieAction, fetchMoviesError, fetchMoviesSuccess } from './actions';
 import axios, { AxiosResponse } from "axios";
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { FetchMovies, Movies } from "./types";
+import { DeleteMovie, FetchMovies, Movies } from "./types";
 
 const getMovies = (limit: number) => axios.get(`http://localhost:4000/movies?limit=${20 + limit}`);
 
@@ -23,7 +23,22 @@ function* fetchMoviesSaga(limit: FetchMovies) {
     }
 }
 
+const deleteMovie = (id: number | string) => axios.delete(`http://localhost:4000/movies/${id}`)
+
+function* deleteMovieSaga(movieId: DeleteMovie) {
+    const {
+        payload: { id }
+    } = movieId
+
+    try {
+        yield call(deleteMovie, id)
+    } catch {
+        yield put(fetchMoviesError({
+            error: 'Error'
+        }))
+    }
+}
 
 export function* moviesSaga() {
-    yield all([takeLatest(FETCH_MOVIES, fetchMoviesSaga)])
+    yield all([takeLatest(FETCH_MOVIES, fetchMoviesSaga), takeLatest(DELETE_MOVIE, deleteMovieSaga)])
 }

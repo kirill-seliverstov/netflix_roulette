@@ -14,7 +14,7 @@ export const Tabs: FC = () => {
 
     useEffect(() => {
         dispatch(fetchMovies({ moviesLimit: limit }))
-    }, [limit])
+    }, [limit, movies])
 
     const filterGenre = (array = movies, filter: string) => {
         return (
