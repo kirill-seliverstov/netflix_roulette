@@ -1,8 +1,9 @@
-import { FETCH_MOVIES, FETCH_MOVIES_SUCCESS, FETCH_MOVIES_ERROR, DELETE_MOVIE } from './actionTypes';
-import { FetchMovies, FetchMoviesSuccess, FetchMoviesError, FetchMoviesSuccessPayload, FetchMoviesErrorPayload, DeleteMovie, DeleteMoviePayload } from './types';
+import { FETCH_MOVIES, FETCH_MOVIES_SUCCESS, FETCH_MOVIES_ERROR, DELETE_MOVIE, MOVIE_DESCRIPTION } from './actionTypes';
+import { FetchMovies, FetchMoviesSuccess, FetchMoviesError, FetchMoviesSuccessPayload, FetchMoviesErrorPayload, DeleteMovie, DeleteMoviePayload, MovieDescriptionPayload, MovieDescription, FetchMoviesPayload } from './types';
 
-export const fetchMovies = (): FetchMovies => ({
-    type: FETCH_MOVIES
+export const fetchMovies = (payload: FetchMoviesPayload): FetchMovies => ({
+    type: FETCH_MOVIES,
+    payload
 })
 
 export const fetchMoviesSuccess = (payload: FetchMoviesSuccessPayload): FetchMoviesSuccess => ({
@@ -15,7 +16,12 @@ export const fetchMoviesError = (payload: FetchMoviesErrorPayload): FetchMoviesE
     payload
 })
 
-export const deleteMovie = (payload: DeleteMoviePayload): DeleteMovie => ({
+export const deleteMovieAction = (payload: DeleteMoviePayload): DeleteMovie => ({
     type: DELETE_MOVIE,
+    payload
+})
+
+export const movieDescrition = (payload: MovieDescriptionPayload): MovieDescription => ({
+    type: MOVIE_DESCRIPTION,
     payload
 })

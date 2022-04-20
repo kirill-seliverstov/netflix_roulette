@@ -5,27 +5,41 @@ import { useModal } from '../../../hooks/useModal';
 import { Modal } from '../../ModalWindows/RootModal';
 import { EditMovieModal } from '../../ModalWindows/EditMovieModal';
 import { DeleteMovieModal } from '../../ModalWindows/DeleteMovieModal';
-import { useDispatch } from 'react-redux';
-import { deleteMovie } from '../../../store/movies/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteMovieAction, fetchMovies, movieDescrition } from '../../../store/movies/actions';
+import { getMovieDescritionSelector } from '../../../store/movies/selectors';
 
 interface MovieProps {
     imageUrl: string;
     title: string;
     id: string | number;
     genre: string[] | string;
-    year: string | number | undefined;
+    year: string | undefined;
     overview?: string;
-    runtime?: number;
+    runtime?: number | null;
+    voteAverage?: number;
 }
 
-export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overview, runtime }) => {
+export const MovieCard: FC<MovieProps> = ({
+    imageUrl,
+    id,
+    genre,
+    title,
+    year,
+    overview,
+    runtime,
+    voteAverage
+}) => {
     const dispatch = useDispatch();
     const { isShown, toggle } = useModal();
     const [hovered, setHovered] = useState<boolean>(false);
     const [controlsShow, setControlsShow] = useState<boolean>(false);
     const [deleteModalShow, setdeleteModalShow] = useState<boolean>(false);
 
-    const onConfirm = () => toggle();
+    const editMovie = () => {
+        toggle()
+        dispatch(fetchMovies({ moviesLimit: 0 }))
+    }
 
     const showHover = (event: React.MouseEvent<HTMLDivElement>) => {
         setHovered(true)
@@ -47,9 +61,29 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overvi
         setdeleteModalShow(true)
     }
 
-    const hideDeleteModal = (event: React.MouseEvent<HTMLDivElement>) => {
-        dispatch(deleteMovie({ id: id }))
+    const hideDeleteModal = (event?: React.MouseEvent<HTMLDivElement> | React.MouseEvent<HTMLButtonElement>) => {
         setdeleteModalShow(false)
+    }
+
+    const deleteMovie = (event: React.MouseEvent<HTMLButtonElement>) => {
+        hideDeleteModal()
+        dispatch(deleteMovieAction({ id: id }))
+        dispatch(fetchMovies({ moviesLimit: 0 }))
+    }
+
+    const getMovieDescription = (event: React.MouseEvent<HTMLImageElement>) => {
+        dispatch(movieDescrition({
+            description: {
+                poster_path: imageUrl,
+                title: title,
+                id: id,
+                genres: (genre as string[]).join(', '),
+                overview: overview,
+                runtime: runtime !== null && runtime !== undefined ? runtime : 0,
+                release_date: year?.substring(0, 4),
+                vote_average: voteAverage
+            }
+        }))
     }
 
     return (
@@ -69,14 +103,15 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overvi
                     e.currentTarget.onerror = null
                     e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/4/44/Question_mark_%28black_on_white%29.png"
                 }}
-                style={{ width: '100%' }}
+                onClick={getMovieDescription}
+                style={{ width: '100%', height: '53.25rem' }}
             />
             <MovieDesc>
                 <div>
                     <MovieTitle>{title}</MovieTitle>
-                    <MovieGenre>{genre}</MovieGenre>
+                    <MovieGenre>{(genre as string[]).join(', ')}</MovieGenre>
                 </div>
-                <MovieYear>{year}</MovieYear>
+                <MovieYear>{year?.substring(0, 4)}</MovieYear>
             </MovieDesc>
 
             <Modal
@@ -87,11 +122,12 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overvi
                     <EditMovieModal
                         genre={genre}
                         id={id}
-                        onConfirm={onConfirm}
+                        onConfirm={editMovie}
                         title={title}
                         year={year}
                         overview={overview}
                         runtime={runtime}
+                        poster_path={imageUrl}
                     />
                 } />
             <Modal
@@ -100,7 +136,7 @@ export const Movie: FC<MovieProps> = ({ imageUrl, id, genre, title, year, overvi
                 headerText={'delete movie'}
                 modalContent={
                     <DeleteMovieModal
-                        onConfirm={hideDeleteModal}
+                        onConfirm={deleteMovie}
                     />
                 }
             />

@@ -1,11 +1,20 @@
 import styled from 'styled-components';
+import { Form, Field } from 'formik';
 
-export const StyledForm = styled.form`
+interface StyledInputProps {
+  border?: string
+}
+
+interface StyledLabelProps {
+  color?: string
+}
+
+export const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
 `
 
-export const StyledLabel = styled.label`
+export const StyledLabel = styled.label<StyledLabelProps>`
   display: block;
 
   margin-bottom: 0.5rem;
@@ -13,10 +22,10 @@ export const StyledLabel = styled.label`
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.2rem;
-  color: #f65261;
+  color: ${props => props.color || '#f65261'};
 `
 
-export const StyledInput = styled.input`
+export const StyledInput = styled(Field)<StyledInputProps>`
   display: block;
   width: 95%;
 
@@ -25,7 +34,7 @@ export const StyledInput = styled.input`
   font-size: 1rem;
   color: #ffffff;
 
-  border: none;
+  border: ${props => props.border || 'none'} ;
   border-radius: 0.25rem;
 
   padding: 1rem;

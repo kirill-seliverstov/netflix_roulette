@@ -1,38 +1,19 @@
-import React, { FC, useEffect } from 'react'
-import { STabs, STabList, STab, STabPanel } from './styles'
-import { Movie } from '../Movies/Movie'
+import React, { FC, useEffect, useState } from 'react'
+import { STabs, STabList, STab, STabPanel, MoviesLimitButton } from './styles'
+import { MovieCard } from '../Movies/MovieCard'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovies } from '../../store/movies/actions';
 import { getMoviesSelector } from '../../store/movies/selectors';
-
-
+import { MovieList } from '../Movies/MovieList';
 
 export const Tabs: FC = () => {
     const dispatch = useDispatch();
-    const movies = useSelector(getMoviesSelector)
+
+    const [limit, setLimit] = useState<number>(0)
 
     useEffect(() => {
-        dispatch(fetchMovies())
-    }, [])
-
-    const filterGenre = (array = movies, filter: string) => {
-        return (
-            array.filter(item =>
-                item.genres.includes(filter)
-                ).map(movie =>
-                    <Movie
-                        key={movie.id}
-                        genre={movie.genres}
-                        id={movie.id}
-                        imageUrl={movie.poster_path}
-                        title={movie.title}
-                        year={movie.release_date}
-                        overview={movie.overview}
-                        runtime={movie.runtime}
-                    />
-                )
-        )
-    }
+        dispatch(fetchMovies({ moviesLimit: limit }))
+    }, [limit])
 
     return (
         <>
@@ -48,31 +29,22 @@ export const Tabs: FC = () => {
                     <STab>Crime</STab>
                 </STabList>
                 <STabPanel>
-                    {movies.map(movie =>
-                        <Movie
-                            key={movie.id}
-                            genre={movie.genres.join(', ')}
-                            id={movie.id}
-                            imageUrl={movie.poster_path}
-                            title={movie.title}
-                            year={movie.release_date?.substring(0, 4)}
-                            overview={movie.overview}
-                            runtime={movie.runtime}
-                        />
-                    )}
+                    <MovieList />
+                    <MoviesLimitButton onClick={() => setLimit(limit + 10)}>More</MoviesLimitButton>
                 </STabPanel>
                 <STabPanel>
-                    {filterGenre(movies, 'documentary')}
+                    
                 </STabPanel>
                 <STabPanel>
-                    {filterGenre(movies, 'comedy')}
+                    
                 </STabPanel>
                 <STabPanel>
-                    {filterGenre(movies, 'horror')}
+                   
                 </STabPanel>
                 <STabPanel>
-                    {filterGenre(movies, 'crime')}
+                    
                 </STabPanel>
+
             </STabs>
         </>
     )
