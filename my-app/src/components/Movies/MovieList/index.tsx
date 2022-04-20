@@ -12,11 +12,11 @@ export const MovieList = () => {
             {movies.map(movie =>
                 <MovieCard
                     key={movie.id}
-                    genre={(movie.genres as Array<String>).join(', ')}
+                    genre={movie.genres}
                     id={movie.id}
                     imageUrl={movie.poster_path}
                     title={movie.title}
-                    year={movie.release_date?.substring(0, 4)}
+                    year={movie.release_date}
                     overview={movie.overview}
                     runtime={movie.runtime}
                     voteAverage={movie.vote_average}

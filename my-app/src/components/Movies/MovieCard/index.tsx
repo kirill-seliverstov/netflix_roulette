@@ -13,10 +13,10 @@ interface MovieProps {
     imageUrl: string;
     title: string;
     id: string | number;
-    genre: string | string[];
+    genre: string[] | string;
     year: string | undefined;
     overview?: string;
-    runtime?: number;
+    runtime?: number | null;
     voteAverage?: number;
 }
 
@@ -36,7 +36,10 @@ export const MovieCard: FC<MovieProps> = ({
     const [controlsShow, setControlsShow] = useState<boolean>(false);
     const [deleteModalShow, setdeleteModalShow] = useState<boolean>(false);
 
-    const onConfirm = () => toggle();
+    const editMovie = () => {
+        toggle()
+        dispatch(fetchMovies({ moviesLimit: 0 }))
+    }
 
     const showHover = (event: React.MouseEvent<HTMLDivElement>) => {
         setHovered(true)
@@ -58,11 +61,12 @@ export const MovieCard: FC<MovieProps> = ({
         setdeleteModalShow(true)
     }
 
-    const hideDeleteModal = (event: React.MouseEvent<HTMLDivElement>) => {
+    const hideDeleteModal = (event?: React.MouseEvent<HTMLDivElement> | React.MouseEvent<HTMLButtonElement>) => {
         setdeleteModalShow(false)
     }
 
     const deleteMovie = (event: React.MouseEvent<HTMLButtonElement>) => {
+        hideDeleteModal()
         dispatch(deleteMovieAction({ id: id }))
         dispatch(fetchMovies({ moviesLimit: 0 }))
     }
@@ -73,10 +77,10 @@ export const MovieCard: FC<MovieProps> = ({
                 poster_path: imageUrl,
                 title: title,
                 id: id,
-                genres: genre,
+                genres: (genre as string[]).join(', '),
                 overview: overview,
-                runtime: runtime,
-                release_date: year,
+                runtime: runtime !== null && runtime !== undefined ? runtime : 0,
+                release_date: year?.substring(0, 4),
                 vote_average: voteAverage
             }
         }))
@@ -105,9 +109,9 @@ export const MovieCard: FC<MovieProps> = ({
             <MovieDesc>
                 <div>
                     <MovieTitle>{title}</MovieTitle>
-                    <MovieGenre>{genre}</MovieGenre>
+                    <MovieGenre>{(genre as string[]).join(', ')}</MovieGenre>
                 </div>
-                <MovieYear>{year}</MovieYear>
+                <MovieYear>{year?.substring(0, 4)}</MovieYear>
             </MovieDesc>
 
             <Modal
@@ -118,11 +122,12 @@ export const MovieCard: FC<MovieProps> = ({
                     <EditMovieModal
                         genre={genre}
                         id={id}
-                        onConfirm={onConfirm}
+                        onConfirm={editMovie}
                         title={title}
                         year={year}
                         overview={overview}
                         runtime={runtime}
+                        poster_path={imageUrl}
                     />
                 } />
             <Modal

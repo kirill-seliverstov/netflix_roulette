@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMovieDescritionSelector } from '../../store/movies/selectors';
 import { MovieDescription } from '../Movies/MovieDescription';
 import { SearchSVG } from '../../assets/svg/SearchIcon';
-import { movieDescrition } from '../../store/movies/actions';
+import { fetchMovies, movieDescrition } from '../../store/movies/actions';
 
 interface HeaderProps {
 
@@ -20,8 +20,12 @@ export const HeaderComponent: FC<HeaderProps> = () => {
   const dispatch = useDispatch();
 
   const { isShown, toggle } = useModal();
-  const onConfirm = () => toggle();
   const onCancel = () => toggle();
+  
+  const addMovie = () => {
+    toggle();
+    dispatch(fetchMovies({ moviesLimit: 0 }))
+  }
 
   const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(movieDescrition({
@@ -53,7 +57,7 @@ export const HeaderComponent: FC<HeaderProps> = () => {
           headerText='Add movie'
           modalContent={
             <AddMovieModal
-              onConfirm={onConfirm}
+              onConfirm={addMovie}
               onCancel={onCancel}
             />
           }
